@@ -1,0 +1,123 @@
+# Instaluj i ładuj wymagane biblioteki
+library(ggplot2)
+library(ggExtra)
+library(mnormt)
+library(MASS)
+
+library(evir)
+
+# Wczytaj dane z pliku CSV
+df <- read.csv("Kursy.csv")
+
+# Przypisz kolumny do zmiennych
+log_zwroty_spolka1 <- df$A
+log_zwroty_spolka2 <- df$B
+
+# Stwórz wykres rozrzutu z histogramami brzegowymi
+wykres <- ggplot(df, aes(x = log_zwroty_spolka1, y = log_zwroty_spolka2)) +
+  geom_point(alpha = 0.5) +
+  geom_histogram(aes(y = ..density..), binwidth = 0.2) +
+  geom_histogram(aes(x = ..density..), binwidth = 0.2) +
+  labs(x = 'Log-zwroty Spółka 1', y = 'Log-zwroty Spółka 2') +
+  theme_minimal()
+
+# Dodaj histogramy brzegowe za pomocą ggExtra
+wykres_z_histo <- ggExtra::ggMarginal(wykres, type = "histogram", margins = "both")
+
+# Wyświetl wykres
+print(wykres_z_histo)
+
+kursy <- df[,c(2,3)]
+
+#wykres rozrzuty z histogramami dla rozkladow brzegowych
+p <-  ggplot(kursy, aes(x=A, y=B)) + geom_point()
+ggMarginal(p, type="histogram")
+
+#estymacja wektora srednich, macierzy kowariancji, macierzy korelacji 
+mu <- colMeans(kursy); mu
+
+Sigma <- cov(kursy)             #estymator nieobciazony
+
+n <- dim(kursy)[1]; n
+Sigma_ob <- (n-1)*cov(kursy)/n  #estymator obciążony
+
+Sigma; Sigma_ob
+
+P <- cor(kursy)  #macierz korelacji
+P
+
+cov_AB <- cov(kursy$A, kursy$B)
+cat("Kowariancja między A i B:", cov_AB, "\n")
+
+cor_AB <- cor(kursy$A, kursy$B)
+cat("Współczynnik korelacji między A i B:", cor_AB, "\n")
+
+X <- cbind(kursy$A, kursy$B)
+#rozklad normalny dwuwymiarowy
+mu.n <- colMeans(X)
+Sigma.n <- cov(X)
+mu.n; Sigma.n
+
+library(mvtnorm)
+
+# Estymacja średnich
+mu.n <- colMeans(X)
+
+# Estymacja macierzy kowariancji
+Sigma.n <- cov(X)
+
+library(MASS)
+
+# Parametry siatki punktów
+library(MASS)
+
+# Estymacja średnich
+mu.n <- colMeans(X)
+
+# Estymacja macierzy kowariancji
+Sigma.n <- cov(X)
+
+# Parametry siatki punktów
+s1 <- 2
+s2 <- 3
+x <- seq(min(X[, 1]) - 3 * s1, max(X[, 1]) + 3 * s1, 0.2) 
+y <- seq(min(X[, 2]) - 3 * s2, max(X[, 2]) + 3 * s2, 0.2)
+
+# Funkcja gęstości dwuwymiarowego rozkładu normalnego
+f <- function(x, y) dmvnorm(cbind(x, y), mean = mu.n, sigma = Sigma.n)  
+
+# Obliczanie wartości gęstości na siatce punktów
+z <- outer(x, y, f)
+
+# Ustawienia marginesów
+par(mfrow=c(3,1), mar=c(3,3,1,1))
+
+# Wykres gęstości 2D (brzegowy X1)
+contour(x, y, z, main = "Gęstość dwuwymiarowego rozkładu normalnego", col="lightblue", lwd=2)
+
+# Wykres gęstości brzegowej dla A
+curve(dnorm(x, mu.n[1], sqrt(Sigma.n[1,1])), xlim = range(x), main = "Gęstość brzegowa A")
+grid()
+
+# Wykres gęstości brzegowej dla B
+curve(dnorm(x, mu.n[2], sqrt(Sigma.n[2,2])), xlim = range(y), main = "Gęstość brzegowa B")
+grid()
+
+
+Z <- rmnorm(1000,mu,Sigma)
+
+Z <- as.data.frame(Z) 
+colnames(Z) <- c('x','y')
+head(Z)
+
+library(ggplot2)
+library(ggExtra)
+
+#wykres rozrzutu 
+p <-  ggplot(Z, aes(x=x, y=y))+
+  geom_point()
+p
+
+#wykres rozrzutu z histogramami rozkladow brzegowych
+p2 <- ggMarginal(p, type="histogram")
+p2
