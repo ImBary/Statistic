@@ -1,0 +1,188 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath} % Wymagane do używania symboli matematycznych i równań
+\usepackage{amssymb}
+\usepackage{subcaption} % Required for subfigures
+\begin{document}
+
+\title{Analiza cen spółek}
+
+\author{Bartek Smolibowski}
+
+\date{December 2023}
+
+\begin{enumerate}
+    \item \textbf{Temat: }Analiza cen spolki
+    \item \textbf{Nazwa spolki:} Grupa Azoty Police SA (PCE)
+    \item \textbf{Okres danych:} 01.01.2022 - 31.12.2022
+\end{enumerate}
+
+\textbf{Spolka Grupa Azoty Zakłady Chemiczne "Police" SA} to polskie przedsiebiorstwo branzy wielkiej syntezy chemicznej.
+
+\vspace{12pt} % Adds a vertical space of 12 points (adjust as needed)
+
+\textbf{Kursy zamkniec na przestrzeni czasu.}
+
+\vspace{12pt}
+
+\textbf{Wykres:}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Rplot.png}
+    \caption{Wykres kursow zamkniec}
+    \label{fig:enter-label}
+\end{figure}
+
+\textbf{Histogram:}
+
+\vspace{12pt}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Rplot01.png}
+    \caption{Histogram kursow zamkniec}
+    \label{fig:enter-label2}
+\end{figure}
+
+\hrulefill
+
+\begin{itemize}
+    \item[$\bullet$] \textbf{Skośność} liczona wzorem $\text{SKE} = \frac{n \sum (x_i - \bar{x})^3}{(n - 1)(n - 2)s^3}$\\
+    Skosnosc to miara symetrii/asymetrii | minusowa - lewo | dodatnia - prawo
+    W naszym wypadku $\text{SKE} = \textbf{0.7}$, co oznacza, że prawe ramię wykresu jest wydłużone.
+    
+    \item[$\bullet$] \textbf{Kurtoza} liczona wzorem $\text{K} = \frac{m^4}{s^4} - 3$\\
+    Kurtoza okresla intensywnosc wystyepowania wartosci skrajnych (w ogonach)
+    w naszym przypadku wynosząca \textbf{3.69} wskazuje na sporą intensywność wartości skrajnych.
+    
+    \item[$\bullet$] \textbf{Odchylenie standardowe} liczone wzorem $s = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})^2}$\\
+    Mierzy rozproszenie zbioru według danych względem średniej, w naszym przypadku wynosi \textbf{0.6}.
+    
+    \item[$\bullet$] \textbf{Wariancja} liczona wzorem $\text{Var}(X) = \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})^2$\\
+    To średnia z kwadratów odchyleń każdej wartości od średniej arytmetycznej zbioru danych w naszym przypadku 0.39
+
+    \item[$\bullet$] \textbf{Srednia} $\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$\\
+    Srednia cena na przestrzeni czasu to \textbf{11.18}
+
+\end{itemize}
+
+\hrulefill
+
+\textbf{DOPASOWANIE GESTOSCI}
+
+\Do do dopasaowania uzyjemy trzech funkcji rozkladu: \textbf{Normalnego}, \textbf{log-normalnego}, \textbf{Gamma}
+
+\begin{itemize}
+    \item[$\bullet$] \textbf{Wzor na gęstosc rozkladu Normalnego} $\f(x|\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$
+
+    \item[$\bullet$] \textbf{Wzor na gestosc rozkladu Log-Normalnego} $\f(x|\mu,\sigma) = \frac{1}{x\sigma\sqrt{2\pi}} e^{-\frac{(\ln x - \mu)^2}{2\sigma^2}}$
+
+    \item[$\bullet$] \textbf{Wzor na gestosc rozkladu Gamma} $\f(x|k,\theta) = \frac{1}{\Gamma(k)\theta^k} x^{k-1} e^{-\frac{x}{\theta}}$
+\end{itemize}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Rplot02.png}
+    \caption{\textbf{Wykres porównujący Empiryczne i Teoretyczne dystrybuanty}}
+    \label{fig:enter-label1}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Rplot03.png}
+    \caption{\textbf{Wykres porównujący kwantyle empiryczne i teoretyczne}}
+    \label{fig:enter-label2}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Rplot05.png}
+    \caption{\textbf{Wykres porównujący na gęstości}}
+    \label{fig:enter-label3}
+\end{figure}
+\vspace{12pt}
+
+\begin{itemize}
+    \item[$\bullet$] \textbf{Wzor na test Kolmogorowa-Smirnov $\ D = \sup|F_n(x) - F(x)|$}
+
+    \item[$\bullet$] \textbf{Wzor na test Cramera-von Misesa $\ W^2 = \int [F_n(x) - F(x)]^2 \, dF(x)$}
+
+    \item[$\bullet$] \textbf{Wzor na test Anderson-Darling $\ A^2 = -n - \sum_{i=1}^{n} \frac{2i-1}{n} \left[ \ln(F(X_i)) + \ln(1 - F(X_{n+1-i})) \right]$}
+\end{itemize}
+
+\vspace{12pt}
+
+\begin{table}[htbp]
+    \centering
+    \caption{\textbf{testy Goddes of Statistic}}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Statistic} & \textbf{norm} & \textbf{lnorm} & \textbf{gamma} \\
+        \hline
+        Kolmogorov-Smirnov & 0.1012138 & 0.09105258 & 0.09436892 \\
+        Cramer-von Mises & 0.3689378 & 0.25513733 & 0.28957664 \\
+        Anderson-Darling & 2.3711022 & 1.66370275 & 1.87978109 \\
+        \hline
+        \textbf{Information Criterion} & & & \\
+        Akaike's & 474.6259 & 465.7726 & 468.4648 \\
+        Bayesian & 481.6447 & 472.7914 & 475.4836 \\
+        \hline
+    \end{tabular}
+    \label{tab:my-table}
+\end{table}
+
+\vspace{12pt}
+
+\hrulefill
+
+\textbf{Jak dobrac odpowiedni rozklad z testu?}\\wybieramy go poprzez wybieranie \textbf{najnizszej} wartosci wsrod testow
+w naszym przypadku 5/0 najnizsza wartosc ma test dla rozkladu Log-normalnego.
+
+\hrulefill
+
+\vspace{12pt}
+
+\textbf{Kolmogorov} - Smirnov sprawdza w najdalsza odleglolsc w jednym punkcie 
+
+\vspace{12pt}
+
+\textbf{Cramer - von mises} oblicza dystrybuante w kazdym punkcie z probki danych pozniej oblicza dystrubuante dla podanej funkcji (gamma,lnorm,norm) w naszym przypadku 
+pozniej liczy kwadrat roznicy tych dystrybuant
+
+\vspace{12pt}
+
+\textbf{Andreson - Darling} suma kwadratow roznicy pomiedzy teoretyczna dystrybuanta a empiryczna 
+
+\hrulefill
+
+\textbf{Testowanie rownosci rozkladow}
+
+\vspace{12pt}
+
+\textbf{Wynik testu Monte carlo na histogramie} gdzie zaznaczony punkt to wynik dla oryginalnych danych.
+
+\vspace{12pt}
+
+\textbf{obliczamy p-value wzorem:} $\text{p-value} = \frac{\text{Liczba wartości w } Dln \text{ większych niż } dn_ln}{N}$
+
+\vspace{12pt}
+
+\textbf{Nasze p-value:} 0.0294
+
+\vspace{12pt}
+
+\textbf{przyjmujemy poziom istotnosci alpha }= 0.05
+
+\vspace{12pt}
+
+\text Po porownaniu czy \textbf{p-value $\leq$ alpha} hipoteze \textbf{odrzucamy} bo \textbf{p-value} jest mniejsza od poziomu istotnosci \textbf{alpha}
+
+\begin{figure}[m]
+    \centering
+    \includegraphics[width=1\linewidth]{Rplot6.png}
+    \caption{Histogram wynikow z testu Monte Carlo}
+    \label{fig:enter-label}
+\end{figure}
+
+\end{document}

@@ -1,0 +1,6 @@
+#Ignore all .png files
+*.png
+
+#Ignore garbage from tex
+*.log
+
