@@ -18,7 +18,7 @@ wykres <- ggplot(df, aes(x = log_zwroty_spolka1, y = log_zwroty_spolka2)) +
   geom_point(alpha = 0.5) +
   geom_histogram(aes(y = ..density..), binwidth = 0.2) +
   geom_histogram(aes(x = ..density..), binwidth = 0.2) +
-  labs(x = 'Log-zwroty Spółka 1', y = 'Log-zwroty Spółka 2') +
+  labs(x = 'Log-zwroty Pepco', y = 'Log-zwroty Energa') +
   theme_minimal()
 
 # Dodaj histogramy brzegowe za pomocą ggExtra
@@ -96,11 +96,11 @@ par(mfrow=c(3,1), mar=c(3,3,1,1))
 contour(x, y, z, main = "Gęstość dwuwymiarowego rozkładu normalnego", col="lightblue", lwd=2)
 
 # Wykres gęstości brzegowej dla A
-curve(dnorm(x, mu.n[1], sqrt(Sigma.n[1,1])), xlim = range(x), main = "Gęstość brzegowa A")
+curve(dnorm(x, mu.n[1], sqrt(Sigma.n[1,1])), xlim = range(x), main = "Gęstość brzegowa Pepco")
 grid()
 
 # Wykres gęstości brzegowej dla B
-curve(dnorm(x, mu.n[2], sqrt(Sigma.n[2,2])), xlim = range(y), main = "Gęstość brzegowa B")
+curve(dnorm(x, mu.n[2], sqrt(Sigma.n[2,2])), xlim = range(y), main = "Gęstość brzegowa Energa")
 grid()
 
 

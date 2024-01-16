@@ -1,0 +1,195 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{subcaption}
+
+
+\begin{document}
+
+\title{Analiza cen spolek 2}
+\author{Bartosz Smolibowski}
+\date{November 2024}
+
+\maketitle
+
+\begin{enumerate}
+    \item \textbf{Temat: }Analiza cen spolki
+    \item \textbf{Nazwa  spolki: } Pepco, Energa
+    \item \textbf{Okres danych: }01.01.2022 - 31.12.2022
+\end{enumerate}
+
+\vspace{12pt}
+
+\section{Wykres rozrzutu spolek z histogramami brzegowymi}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Rplot06.png}
+    
+\end{figure}
+
+\clearpage 
+
+\section{srednie $\mu$, kowariancji, wspólczynnik korelacji, macierz kowariancji $\sum$,macierz korelacji P}
+
+\vspace{12pt}
+
+\textbf{wykres srednich $\mu$ }
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lc}
+        \toprule
+        \textbf{Pepco} & \textbf{Energa} \\
+        \midrule
+         50.16818  & 100.36012  \\
+    
+        \bottomrule
+    \end{tabular}
+    \caption{Wektor średnich $\mu$}
+    \label{tab:mean_vector}
+\end{table}
+
+\vspace{30pt}
+
+\textbf{Macierze kowariancji }
+
+\vspace{30pt}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lcc}
+        \toprule
+        & \textbf{Pepco} & \textbf{Energa} \\
+        \midrule
+         \textbf{Pepco} & 106.2091  & 163.0173 \\
+         \textbf{Energa} & 163.0173 & 899.6912
+        \bottomrule
+    \end{tabular}
+    \caption{Macierz kowariancji(1)}
+    \label{tab:mean_vector}
+\end{table}
+
+\vspace{30pt}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lcc}
+        \toprule
+        & \textbf{Pepco} & \textbf{Energa} \\
+        \midrule
+         \textbf{Pepco} & 106.1029 & 162.8543 \\
+         \textbf{Energa} & 162.8543 & 898.7915
+        \bottomrule
+    \end{tabular}
+    \caption{Macierz kowariancji(2)}
+    \label{tab:mean_vector}
+\end{table}
+
+\newpage
+
+\textbf{Macierz Korelacji }
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lcc}
+        \toprule
+        & \textbf{Pepco} & \textbf{Energa} \\
+        \midrule
+         \textbf{Pepco} & 1 & 0.5273589 \\
+         \textbf{Energa} & 0.5273589 & 1
+        \bottomrule
+    \end{tabular}
+    \caption{Macierz korelacji(3)}
+    \label{tab:mean_vector}
+\end{table}
+
+\vspace{30pt}
+
+\textbf{Kowariancja miedzy Pepco i Energa: } 163.0173
+
+\vspace{30pt}
+
+\textbf{Wpolczynnik korelacji miedzy Pepco i Energa: }0.5273589
+
+\vspace{30pt}
+
+\textbf{(1)Estymator: }S_{xy} = \frac{1}{n} \sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})
+
+\vspace{20pt}
+
+\textbf{(2)Estymator obciazony: }S_{xy} = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})
+
+\vspace{20pt}
+
+\textbf{(3)Estymator Korelacji: } S_x^2 = \hat{\sigma}_1^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})^2\
+
+\vspace{20pt}
+
+\textbf{(3) Estynator Korelacji: } S_y^2 = \hat{\sigma}_1^2 = \frac{1}{n-1} \sum_{i=1}^{n} (Y_i - \bar{Y})^2\
+
+\newpage
+
+\section{ Gestosc rozkladu normalnego dwuwymiarowego, wzory gestosci rozkladów brzegowych}
+
+\vspace{20pt}
+
+\textbf{Wzor Gestosc rozkladu normalnego dwynuariwego: }
+
+\begin{equation}
+    f(x, y) = \frac{1}{{2\pi\sigma_1\sigma_2\sqrt{1 - \rho^2}}} \exp\left(-\frac{1}{2(1 - \rho^2)} \left(\frac{(x - \mu_1)^2}{\sigma_1^2} - 2\rho\frac{(x - \mu_1)(y - \mu_2)}{\sigma_1\sigma_2} + \frac{(y - \mu_2)^2}{\sigma_2^2}\right)\right)
+\end{equation}
+
+\vspace{30pt}
+
+\textbf{Rozklady brzegowe}
+
+\vspace{20pt}
+
+\item Jeśli $(X, Y) \sim N(\mu_1, \mu_2, \sigma_1, \sigma_2, \rho)$, to $X \sim N(\mu_1, \sigma_1)$ i $Y \sim N(\mu_2, \sigma_2)$.
+
+\begin{equation}
+    $f_1(x) = \int_{-\infty}^{\infty} f(x, y) \, dy = \frac{1}{\sqrt{2\pi\sigma_1}} e^{-\frac{(x-\mu_1)^2}{2\sigma_1^2}}, \quad x \in \mathbb{R}$
+\end{equation}
+
+\begin{equation}
+    $f_1(y) = \int_{-\infty}^{\infty} f(x, y) \, dy = \frac{1}{\sqrt{2\pi\sigma_1}} e^{-\frac{(y-\mu_1)^2}{2\sigma_1^2}}, \quad y \in \mathbb{R}$
+\end{equation}
+
+\newpage
+
+\textbf{Wykresy brzegowe}
+
+\vspace{30}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Rplot08.png}
+    \label{fig:enter-label}
+\end{figure}
+
+\newpage
+
+\section{Proba licznosci}
+
+\vspace{30}
+
+\textbf{wykres proby licznosci}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Rplot09.png}
+    \caption{wykres proby licznosci}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Rplot06.png}
+    \caption{wykres z wartosci spolek}    
+\end{figure}
+
+
+\end{document}
+
